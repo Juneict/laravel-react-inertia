@@ -55,15 +55,21 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return inertia('Edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
-        //
+        $fields = $request->validate([
+            'body' => 'required'
+        ]);
+
+        $post->update($fields);
+
+        return redirect('/')->with('message','Post successfully updated');
     }
 
     /**
@@ -71,6 +77,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect('/')->with('message','Post successfully deleted');
     }
 }

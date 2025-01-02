@@ -1,21 +1,21 @@
 import { Head, useForm } from "@inertiajs/react"
 
-export default function Create() {
-    const { data, setData, post, processing, errors } = useForm({
-        body:''
+export default function Edit({post}) {
+    const { data, setData, put, processing, errors } = useForm({
+        body:post.body
     })
 
     function submit(e) {
         e.preventDefault();
-        post('/post');
+        put(`/post/${post.id}`);
     }
 
-    console.log(errors);
+    console.log(post);
 
     return (
         <>
-            <Head title="Create"/>
-            <h1 className="title">Create A Post</h1>
+            <Head title="Edit"/>
+            <h1 className="title">Update your Post</h1>
             <div className="w-1/2 mx-auto">
                 <form onSubmit={submit}>
                     <textarea 
@@ -26,7 +26,7 @@ export default function Create() {
                     >
                     </textarea>
                     { errors.body && <p className="error">{errors.body}</p>}
-                    <button className="primary-btn mt-4" disabled={processing} >Create Post</button>
+                    <button className="primary-btn mt-4" disabled={processing} >Update Post</button>
                 </form>
             </div>
         </>
