@@ -14,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Home', ['name' => 'June Moe']);
+        $posts = Post::latest()->get();
+
+        return Inertia::render('Home', ['posts' => $posts]);
     }
 
     /**
