@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -24,15 +25,21 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'body' => 'required'
+        ]);
+
+        Post::create($fields);
+
+        return redirect('/');
     }
 
     /**
@@ -40,7 +47,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return inertia('Show', ['post' => $post]);
     }
 
     /**
